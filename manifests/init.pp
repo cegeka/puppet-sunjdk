@@ -7,14 +7,14 @@
 # Usage:
 # include sunjdk
 #
-class sunjdk {
+class sunjdk($jdk_version) {
+  if ! $jdk_version {
+    $jdk_version = 'latest'
+  }
 
-    include params
-
-    case $operatingsystem {
-        redhat, centos: { include sunjdk::redhat }
-        ubuntu: { include sunjdk::ubuntu }
-        default: {}
-    }
-    
+  case $::operatingsystem {
+    redhat, centos: { include sunjdk::redhat }
+    ubuntu: { include sunjdk::ubuntu }
+    default: {}
+  }
 }
