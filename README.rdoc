@@ -1,0 +1,5 @@
+= puppet-sunjdk module
+
+{<img src='https://codex.cegeka.be/jenkins/job/puppet-sunjdk/badge/icon' />}[https://codex.cegeka.be/jenkins/job/puppet-sunjdk/]
+
+This is the sunjdk module.
