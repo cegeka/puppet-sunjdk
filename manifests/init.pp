@@ -24,3 +24,4 @@ class sunjdk($jdk_version,$ensure) {
     default: {}
   }
 }
+
