@@ -1,10 +1,10 @@
 class sunjdk::redhat {
-  package { 'glibc.i686' :
-    ensure => $ensure,
+  package { 'glibc.i686':
+    ensure => $sunjdk::ensure,
   }
 
-  package { 'jdk' :
-    ensure   => $sunjdk::jdk_version, 
-    require  => Package["glibc.i686"],
+  package { 'jdk':
+    ensure   => $sunjdk::jdk_version,
+    require  => Package['glibc.i686'],
   }
 }
