@@ -4,8 +4,7 @@
 
 This module allows you to install sunjdk on differens operating systems.
 
-Usage
------
+== Usage
 
 You must provide wether you want to install sunjdk and may provide which version, if no version is provided the latest version in your repository will be used.
 
