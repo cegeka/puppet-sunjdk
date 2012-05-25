@@ -1,6 +1,6 @@
 class sunjdk::redhat {
   package { 'glibc.i686':
-    ensure => $sunjdk::ensure,
+    ensure => present,
   }
 
   package { 'jdk':
