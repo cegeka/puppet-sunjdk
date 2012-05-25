@@ -1,9 +1,6 @@
 class sunjdk::windows {
-  file { "jdk_${sunjdk::real_jdk_version}.msi":
-        ensure  => file,
-        path    => "C:/temp/jdk_${sunjdk::real_jdk_version}.msi",
-        source  => "puppet:///modules/sunjdk/jdk_${sunjdk::real_jdk_version}.msi",
-  }
+  include "sunjdk::jdk_releases::jdk_${sunjdk::real_jdk_version}"
+
   package { 'jdk':
     ensure          => $sunjdk::ensure,
     provider        => 'msi',
