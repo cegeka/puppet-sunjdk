@@ -2,4 +2,10 @@
 
 {<img src='https://codex.cegeka.be/jenkins/job/puppet-sunjdk/badge/icon' />}[https://codex.cegeka.be/jenkins/job/puppet-sunjdk/]
 
-This is the sunjdk module.
+This module allows you to install sunjdk on differens operating systems.
+
+== Usage
+
+You must provide wether you want to install sunjdk and may provide which version, if no version is provided the latest version in your repository will be used.
+
+Keep in mind you _have_ to provide a jdk version number when install on Windows, the msi will be installed from a local puppet source.
