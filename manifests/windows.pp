@@ -4,7 +4,7 @@ class sunjdk::windows {
   package { 'jdk':
     ensure          => $sunjdk::ensure,
     provider        => 'msi',
-    source          => "C:\\temp\\jdk_${sunjdk::real_jdk_version}.msi",
+    source          => "C:\\temp\\jdk_${sunjdk::real_jdk_version}\\jdk_${sunjdk::real_jdk_version}.msi",
     install_options => {
       'INSTALLDIR'  => 'C:\Program Files\Java\JDK 1.6'
     },
