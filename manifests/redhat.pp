@@ -9,9 +9,9 @@ class sunjdk::redhat {
   }
 
   file { 'keytool':
-    ensure => link,
-    target => '/usr/java/default/bin/keytool',
-    path   => '/usr/bin/keytool',
+    ensure  => link,
+    target  => '/usr/java/default/bin/keytool',
+    path    => '/usr/bin/keytool',
     require => Package["jdk-${sunjdk::jdk_version}"],
   }
 }
