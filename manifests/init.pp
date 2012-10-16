@@ -10,7 +10,7 @@
 #   ensure      => 'present',
 # }
 #
-class sunjdk($jdk_version,$ensure) {
+class sunjdk($jdk_version, $ensure='present', $install_options=undef) {
   if ! $jdk_version {
     $jdk_version = 'latest'
   } else {
