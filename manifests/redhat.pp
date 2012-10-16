@@ -4,7 +4,14 @@ class sunjdk::redhat {
   }
 
   package { "jdk-${sunjdk::jdk_version}":
-    ensure   => present,
+    ensure   => $sunjdk::ensure,
     require  => Package['glibc.i686'],
+  }
+
+  file { 'keytool':
+    ensure => link,
+    target => '/usr/java/default/bin/keytool',
+    path   => '/usr/bin/keytool',
+    require => Package["jdk-${sunjdk::jdk_version}"],
   }
 }
