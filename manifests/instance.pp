@@ -18,19 +18,21 @@ define sunjdk::instance($jdk_version, $ensure='present', $install_options=undef)
   }
 
   case $::operatingsystem {
-    redhat, centos: { 
+    redhat, centos: {
       sunjdk::redhat { $name:
-        jdk_version      => $jdk_version,
-        ensure           => $ensure
+        ensure      => $ensure,
+        jdk_version => $jdk_version
       }
     }
     ubuntu: {
-      #include sunjdk::ubuntu 
+      sunjdk::ubuntu { $name:
+        jdk_version => $jdk_version
+      }
     }
-    windows: { 
+    windows: {
       sunjdk::windows { $name:
-        jdk_version      => $jdk_version,
-        ensure           => $ensure,
+        ensure          => $ensure,
+        jdk_version     => $jdk_version,
         install_options => $install_options
       }
     }
