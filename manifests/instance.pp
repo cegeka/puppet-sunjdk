@@ -1,15 +1,3 @@
-#
-# Class: sunjdk
-#
-# Manages sunjdk.
-# Include it to install the Sun Java6 JDK package.
-#
-# Usage:
-# class { sunjdk:
-#   jdk_version => '',
-#   ensure      => 'present',
-# }
-#
 define sunjdk::instance($jdk_version, $ensure='present', $install_options=undef) {
   if ! $jdk_version {
     $jdk_version = 'latest'
