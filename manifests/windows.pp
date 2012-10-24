@@ -1,26 +1,26 @@
-class sunjdk::windows {
+define sunjdk::windows($jdk_version, $ensure='present', $install_options=undef) {
 
-  include "sunjdk::jdk_releases::jdk_${sunjdk::real_jdk_version}"
+  include "sunjdk::jdk_releases::jdk_${jdk_version}"
 
-  case $sunjdk::ensure {
+  case $ensure {
 
     'present': {
-      package { 'jdk':
-        ensure          => $sunjdk::ensure,
+      package { "jdk_${jdk_version}":
+        ensure          => $ensure,
         provider        => 'msi',
-        source          => "C:\\temp\\jdk_${sunjdk::real_jdk_version}\\jdk_${sunjdk::real_jdk_version}.msi",
-        install_options => $sunjdk::install_options,
-        require         => File["jdk_${sunjdk::real_jdk_version}.msi"],
+        source          => "C:\\temp\\jdk_${jdk_version}\\jdk_${jdk_version}.msi",
+        install_options => $install_options,
+        require         => File["jdk_${jdk_version}.msi"],
       }
     }
 
     'absent': {
-      exec { "remove jdk_${sunjdk::real_jdk_version}.msi":
-        command => "C:\\Windows\\system32\\msiexec.exe /qn /norestart /x C:\\temp\\jdk_${sunjdk::real_jdk_version}\\jdk_${sunjdk::real_jdk_version}.msi",
+      exec { "remove jdk_${jdk_version}.msi":
+        command => "C:\\Windows\\system32\\msiexec.exe /qn /norestart /x C:\\temp\\jdk_${jdk_version}\\jdk_${jdk_version}.msi",
       }
     }
 
-    default: { notice("ensure parameter ${sunjdk::ensure} is not supported") }
+    default: { notice("ensure parameter ${ensure} is not supported") }
   }
 
 }
