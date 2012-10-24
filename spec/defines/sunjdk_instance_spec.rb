@@ -1,0 +1,30 @@
+require 'spec_helper'
+
+describe 'sunjdk::instance' do
+  
+  context 'installing sunjdk instance' do
+    let (:title) { 'installing sunjdk' }
+    let (:facts) { { :operatingsystem => 'redhat' } }
+    let(:params) { { :ensure => 'present', :jdk_version => '1.6.0_32-fcs.i586' } }
+
+    it { should contain_package("glibc.i686").with(
+        :ensure => 'present'
+      )
+    }
+
+    it { should contain_package("jdk-1.6.0_32-fcs.i586").with(
+        :ensure => 'present',
+        :require => 'Package[glibc.i686]'
+      )
+    }
+
+    it { should contain_file('keytool').with(
+        :ensure => 'link',
+        :target => '/usr/java/default/bin/keytool',
+        :path => '/usr/bin/keytool',
+        :require => 'Package[jdk-1.6.0_32-fcs.i586]'
+      )
+    }
+  end
+
+end
