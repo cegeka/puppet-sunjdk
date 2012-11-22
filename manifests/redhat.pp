@@ -20,4 +20,13 @@ define sunjdk::redhat($jdk_version, $ensure='present') {
     }
   }
 
+  if ! defined(File['jps']) {
+    file { 'jps':
+      ensure  => link,
+      target  => '/usr/java/default/bin/jps',
+      path    => '/usr/bin/jps',
+      require => Package["jdk-${jdk_version}"],
+    }
+  }
+
 }
