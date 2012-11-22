@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'sunjdk::instance' do
-  
+
   context 'installing sunjdk instance' do
     let (:title) { 'installing sunjdk' }
     let (:facts) { { :operatingsystem => 'redhat' } }
@@ -22,6 +22,14 @@ describe 'sunjdk::instance' do
         :ensure => 'link',
         :target => '/usr/java/default/bin/keytool',
         :path => '/usr/bin/keytool',
+        :require => 'Package[jdk-1.6.0_32-fcs.i586]'
+      )
+    }
+
+    it { should contain_file('jps').with(
+        :ensure => 'link',
+        :target => '/usr/java/default/bin/jps',
+        :path => '/usr/bin/jps',
         :require => 'Package[jdk-1.6.0_32-fcs.i586]'
       )
     }
