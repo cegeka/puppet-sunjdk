@@ -7,7 +7,7 @@ define sunjdk::windows($jdk_version, $package_code='', $ensure='present', $insta
     'present': {
       package { "jdk_${jdk_version}":
         ensure          => $ensure,
-        name            => $packagecode,
+        name            => $package_code,
         provider        => 'windows',
         source          => "C:\\temp\\jdk_${jdk_version}\\jdk_${jdk_version}.msi",
         install_options => $install_options,
