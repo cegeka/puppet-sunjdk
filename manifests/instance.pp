@@ -1,4 +1,4 @@
-define sunjdk::instance($jdk_version, $ensure='present', $install_options=undef) {
+define sunjdk::instance($jdk_version, $package_code='', $ensure='present', $install_options=undef) {
   if ! $jdk_version {
     $jdk_version = 'latest'
   } else {
@@ -21,6 +21,7 @@ define sunjdk::instance($jdk_version, $ensure='present', $install_options=undef)
       sunjdk::windows { $name:
         ensure          => $ensure,
         jdk_version     => $jdk_version,
+        package_code    => $package_code,
         install_options => $install_options
       }
     }
