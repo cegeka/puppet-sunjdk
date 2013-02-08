@@ -1,4 +1,4 @@
-define sunjdk::windows($jdk_version, $ensure='present', $install_options=undef) {
+define sunjdk::windows($jdk_version, $package_code='', $ensure='present', $install_options=undef) {
 
   include "sunjdk::jdk_releases::jdk_${jdk_version}"
 
@@ -7,7 +7,8 @@ define sunjdk::windows($jdk_version, $ensure='present', $install_options=undef) 
     'present': {
       package { "jdk_${jdk_version}":
         ensure          => $ensure,
-        provider        => 'msi',
+        name            => $packagecode,
+        provider        => 'windows',
         source          => "C:\\temp\\jdk_${jdk_version}\\jdk_${jdk_version}.msi",
         install_options => $install_options,
         require         => File["jdk_${jdk_version}.msi"],
