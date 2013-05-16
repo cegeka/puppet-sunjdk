@@ -29,4 +29,15 @@ define sunjdk::redhat($jdk_version, $ensure='present') {
     }
   }
 
+  file { '/etc/ld.so.conf.d/jdk.conf':
+    ensure  => file,
+    content => '/usr/java/default/jre/lib/amd64/server'
+  }
+
+  exec { 'ldconfig -f /etc/ld.so.conf':
+    path        => ['/usr/bin', '/usr/sbin', '/sbin'],
+    refreshonly => true,
+    subscribe   => File['/etc/ld.so.conf.d/jdk.conf']
+  }
+
 }
