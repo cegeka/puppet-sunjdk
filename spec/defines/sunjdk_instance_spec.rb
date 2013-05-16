@@ -33,6 +33,18 @@ describe 'sunjdk::instance' do
         :require => 'Package[jdk-1.6.0_32-fcs.i586]'
       )
     }
+
+    it { should contain_file('/etc/ld.so.conf.d/jdk.conf').with(
+        :ensure => 'file',
+        :content => '/usr/java/default/jre/lib/amd64/server'
+      )
+    }
+
+    it { should contain_exec('ldconfig -f /etc/ld.so.conf').with(
+        :refreshonly => true,
+        :subscribe => 'File[/etc/ld.so.conf.d/jdk.conf]'
+      )
+    }
   end
 
 end
