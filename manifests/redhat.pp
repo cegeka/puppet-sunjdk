@@ -1,6 +1,6 @@
 define sunjdk::redhat(
   $jdk_version,
-  $version_lock=false,
+  $versionlock=false,
   $ensure='present',
 ) {
 
@@ -46,14 +46,14 @@ define sunjdk::redhat(
     }
   }
 
-  case $version_lock {
+  case $versionlock {
     true: {
       packagelock { "jdk-${jdk_version}": }
     }
     false: {
       packagelock { "jdk-${jdk_version}": ensure => absent }
     }
-    default: { fail('Class[Sunjdk::Redhat]: parameter version_lock must be true or false')}
+    default: { fail('Class[Sunjdk::Redhat]: parameter versionlock must be true or false')}
   }
 
 }
