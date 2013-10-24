@@ -1,4 +1,11 @@
-define sunjdk::instance($jdk_version, $package_code='', $ensure='present', $install_options=undef) {
+define sunjdk::instance(
+  $jdk_version,
+  $version_lock=false,
+  $package_code='',
+  $ensure='present',
+  $install_options=undef
+) {
+
   if ! $jdk_version {
     $jdk_version = 'latest'
   } else {
@@ -8,8 +15,9 @@ define sunjdk::instance($jdk_version, $package_code='', $ensure='present', $inst
   case $::operatingsystem {
     redhat, centos: {
       sunjdk::redhat { $name:
-        ensure      => $ensure,
-        jdk_version => $jdk_version
+        ensure       => $ensure,
+        jdk_version  => $jdk_version,
+        version_lock => $version_lock
       }
     }
     ubuntu: {
@@ -27,5 +35,5 @@ define sunjdk::instance($jdk_version, $package_code='', $ensure='present', $inst
     }
     default: {}
   }
-}
 
+}
