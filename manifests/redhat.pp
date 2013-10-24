@@ -1,4 +1,8 @@
-define sunjdk::redhat($jdk_version, $ensure='present') {
+define sunjdk::redhat(
+  $jdk_version,
+  $version_lock=false,
+  $ensure='present',
+) {
 
   if ! defined(Package['glibc.i686']) {
     package { 'glibc.i686':
@@ -40,6 +44,16 @@ define sunjdk::redhat($jdk_version, $ensure='present') {
       refreshonly => true,
       subscribe   => File['/etc/ld.so.conf.d/jdk.conf']
     }
+  }
+
+  case $version_lock {
+    true: {
+      packagelock { "jdk-${jdk_version}": }
+    }
+    false: {
+      packagelock { "jdk-${jdk_version}": ensure => absent }
+    }
+    default: { fail('Class[Sunjdk::Redhat]: parameter version_lock must be true or false')}
   }
 
 }
