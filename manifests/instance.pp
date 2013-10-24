@@ -1,6 +1,6 @@
 define sunjdk::instance(
   $jdk_version,
-  $version_lock=false,
+  $versionlock=false,
   $package_code='',
   $ensure='present',
   $install_options=undef
@@ -17,7 +17,7 @@ define sunjdk::instance(
       sunjdk::redhat { $name:
         ensure       => $ensure,
         jdk_version  => $jdk_version,
-        version_lock => $version_lock
+        versionlock => $versionlock
       }
     }
     ubuntu: {
