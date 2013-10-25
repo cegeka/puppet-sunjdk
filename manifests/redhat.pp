@@ -1,59 +1,82 @@
 define sunjdk::redhat(
-  $jdk_version,
+  $jdk_version=undef,
   $versionlock=false,
   $ensure='present',
 ) {
 
-  if ! defined(Package['glibc.i686']) {
-    package { 'glibc.i686':
-      ensure => present,
-    }
-  }
+  case $ensure {
+    'present': {
+      if ! defined(Package['glibc.i686']) {
+        package { 'glibc.i686':
+          ensure => present,
+        }
+      }
 
-  package { "jdk-${jdk_version}":
-    ensure   => $ensure,
-    require  => Package['glibc.i686'],
-  }
+      package { "jdk":
+        ensure   => $jdk_version,
+        require  => Package['glibc.i686']
+      }
 
-  if ! defined(File['keytool']) {
-    file { 'keytool':
-      ensure  => link,
-      target  => '/usr/java/default/bin/keytool',
-      path    => '/usr/bin/keytool',
-      require => Package["jdk-${jdk_version}"],
-    }
-  }
+      if ! defined(File['keytool']) {
+        file { 'keytool':
+          ensure  => link,
+          target  => '/usr/java/default/bin/keytool',
+          path    => '/usr/bin/keytool',
+          require => Package["jdk"]
+        }
+      }
 
-  if ! defined(File['jps']) {
-    file { 'jps':
-      ensure  => link,
-      target  => '/usr/java/default/bin/jps',
-      path    => '/usr/bin/jps',
-      require => Package["jdk-${jdk_version}"],
-    }
-  }
+      if ! defined(File['jps']) {
+        file { 'jps':
+          ensure  => link,
+          target  => '/usr/java/default/bin/jps',
+          path    => '/usr/bin/jps',
+          require => Package["jdk"]
+        }
+      }
 
-  if ! defined(File['/etc/ld.so.conf.d/jdk.conf']) {
-    file { '/etc/ld.so.conf.d/jdk.conf':
-      ensure  => file,
-      content => '/usr/java/default/jre/lib/amd64/server'
-    }
+      if ! defined(File['/etc/ld.so.conf.d/jdk.conf']) {
+        file { '/etc/ld.so.conf.d/jdk.conf':
+          ensure  => file,
+          content => '/usr/java/default/jre/lib/amd64/server'
+        }
 
-    exec { 'ldconfig -f /etc/ld.so.conf':
-      path        => ['/usr/bin', '/usr/sbin', '/sbin'],
-      refreshonly => true,
-      subscribe   => File['/etc/ld.so.conf.d/jdk.conf']
-    }
-  }
+        exec { 'ldconfig -f /etc/ld.so.conf':
+          path        => ['/usr/bin', '/usr/sbin', '/sbin'],
+          refreshonly => true,
+          subscribe   => File['/etc/ld.so.conf.d/jdk.conf'],
+          require     => Package["jdk"]
+        }
+      }
 
-  case $versionlock {
-    true: {
-      packagelock { "jdk-${jdk_version}": }
+      case $versionlock {
+        true: {
+          packagelock { "jdk": }
+        }
+        false: {
+          packagelock { "jdk": ensure => absent }
+        }
+        default: { fail('Class[Sunjdk::Redhat]: parameter versionlock must be true or false')}
+      }
     }
-    false: {
-      packagelock { "jdk-${jdk_version}": ensure => absent }
+    'absent': {
+      packagelock { "jdk": ensure => absent }
+      ->
+      package { "jdk":
+        ensure => absent
+      }
+
+      file { [ '/usr/bin/keytool', '/usr/bin/jps', '/etc/ld.so.conf.d/jdk.conf' ]:
+        ensure  => absent
+      }
+
+      exec { 'ldconfig -f /etc/ld.so.conf':
+        path        => ['/usr/bin', '/usr/sbin', '/sbin'],
+        refreshonly => true,
+        subscribe   => File['/etc/ld.so.conf.d/jdk.conf']
+      }
     }
-    default: { fail('Class[Sunjdk::Redhat]: parameter versionlock must be true or false')}
+    default: { fail('Class[Sunjdk::Redhat]: parameter ensure must be present or absent') }
   }
 
 }
