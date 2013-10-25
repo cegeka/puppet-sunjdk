@@ -12,8 +12,8 @@ describe 'sunjdk::instance' do
       )
     }
 
-    it { should contain_package("jdk-1.6.0_32-fcs.i586").with(
-        :ensure => 'present',
+    it { should contain_package("jdk").with(
+        :ensure => '1.6.0_32-fcs.i586',
         :require => 'Package[glibc.i686]'
       )
     }
@@ -22,7 +22,7 @@ describe 'sunjdk::instance' do
         :ensure => 'link',
         :target => '/usr/java/default/bin/keytool',
         :path => '/usr/bin/keytool',
-        :require => 'Package[jdk-1.6.0_32-fcs.i586]'
+        :require => 'Package[jdk]'
       )
     }
 
@@ -30,7 +30,7 @@ describe 'sunjdk::instance' do
         :ensure => 'link',
         :target => '/usr/java/default/bin/jps',
         :path => '/usr/bin/jps',
-        :require => 'Package[jdk-1.6.0_32-fcs.i586]'
+        :require => 'Package[jdk]'
       )
     }
 
