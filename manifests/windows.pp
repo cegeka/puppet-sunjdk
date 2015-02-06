@@ -1,4 +1,4 @@
-define sunjdk::windows($jdk_version, $package_code='', $ensure='present', $install_options=undef) {
+define sunjdk::windows($jdk_version, $pkg_name, $package_code='', $ensure='present', $install_options=undef) {
 
   include "sunjdk::jdk_releases::jdk_${jdk_version}"
 
