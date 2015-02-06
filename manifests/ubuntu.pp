@@ -1,4 +1,4 @@
-define sunjdk::ubuntu($jdk_version) {
+define sunjdk::ubuntu($jdk_version, $pkg_name) {
     file { '/var/cache/debconf/java6.seeds' :
         ensure  => present,
         source  => 'puppet:///modules/sunjdk/java6.seeds',

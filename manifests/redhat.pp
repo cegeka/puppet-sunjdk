@@ -1,5 +1,6 @@
 define sunjdk::redhat(
   $jdk_version=undef,
+  $pkg_name=undef,
   $versionlock=false,
   $ensure='present',
 ) {
@@ -12,7 +13,7 @@ define sunjdk::redhat(
         }
       }
 
-      package { "jdk":
+      package { $pkg_name :
         ensure   => $jdk_version,
         require  => Package['glibc.i686']
       }
@@ -51,18 +52,18 @@ define sunjdk::redhat(
 
       case $versionlock {
         true: {
-          packagelock { "jdk": }
+          packagelock { $pkg_name : }
         }
         false: {
-          packagelock { "jdk": ensure => absent }
+          packagelock { $pkg_name : ensure => absent }
         }
         default: { fail('Class[Sunjdk::Redhat]: parameter versionlock must be true or false')}
       }
     }
     'absent': {
-      packagelock { "jdk": ensure => absent }
+      packagelock { $pkg_name : ensure => absent }
       ->
-      package { "jdk":
+      package { $pkg_name :
         ensure => absent
       }
 
