@@ -23,7 +23,7 @@ define sunjdk::redhat(
           ensure  => link,
           target  => '/usr/java/default/bin/keytool',
           path    => '/usr/bin/keytool',
-          require => Package["jdk"]
+          require => Package[$pkg_name]
         }
       }
 
@@ -32,7 +32,7 @@ define sunjdk::redhat(
           ensure  => link,
           target  => '/usr/java/default/bin/jps',
           path    => '/usr/bin/jps',
-          require => Package["jdk"]
+          require => Package[$pkg_name]
         }
       }
 
@@ -46,7 +46,7 @@ define sunjdk::redhat(
           path        => ['/usr/bin', '/usr/sbin', '/sbin'],
           refreshonly => true,
           subscribe   => File['/etc/ld.so.conf.d/jdk.conf'],
-          require     => Package["jdk"]
+          require     => Package[$pkg_name]
         }
       }
 
