@@ -3,6 +3,10 @@ class sunjdk::redhat {
     ensure => present,
   }
 
+  package { 'libaio':
+    ensure => present,
+  }
+
   package { "jdk-${sunjdk::jdk_version}":
     ensure   => $sunjdk::ensure,
     require  => Package['glibc.i686'],
