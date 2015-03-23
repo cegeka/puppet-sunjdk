@@ -17,6 +17,9 @@ define sunjdk::redhat(
         ensure   => $jdk_version,
         require  => Package['glibc.i686']
       }
+      package { 'libaio':
+        ensure => present,
+      }
 
       if ! defined(File['keytool']) {
         file { 'keytool':
