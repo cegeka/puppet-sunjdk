@@ -55,15 +55,6 @@ define sunjdk::redhat(
         }
       }
 
-      case $versionlock {
-        true: {
-          packagelock { $pkg_name : }
-        }
-        false: {
-          packagelock { $pkg_name : ensure => absent }
-        }
-        default: { fail('Class[Sunjdk::Redhat]: parameter versionlock must be true or false')}
-      }
     }
     'absent': {
       packagelock { $pkg_name : ensure => absent }
