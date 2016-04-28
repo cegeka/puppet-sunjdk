@@ -14,8 +14,8 @@ define sunjdk::redhat(
       }
 
       package { $pkg_name :
-        ensure   => $jdk_version,
-        require  => Package['glibc.i686']
+        ensure  => $jdk_version,
+        require => Package['glibc.i686']
       }
       if ! defined(Package['libaio']) {
         package { 'libaio':
