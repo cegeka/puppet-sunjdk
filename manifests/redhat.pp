@@ -23,24 +23,6 @@ define sunjdk::redhat(
         }
       }
 
-      if ! defined(File['keytool']) {
-        file { 'keytool':
-          ensure  => link,
-          target  => '/usr/java/default/bin/keytool',
-          path    => '/usr/bin/keytool',
-          require => Package[$pkg_name]
-        }
-      }
-
-      if ! defined(File['jps']) {
-        file { 'jps':
-          ensure  => link,
-          target  => '/usr/java/default/bin/jps',
-          path    => '/usr/bin/jps',
-          require => Package[$pkg_name]
-        }
-      }
-
       if ! defined(File['/etc/ld.so.conf.d/jdk.conf']) {
         file { '/etc/ld.so.conf.d/jdk.conf':
           ensure  => file,
@@ -63,7 +45,7 @@ define sunjdk::redhat(
         ensure => absent
       }
 
-      file { [ '/usr/bin/keytool', '/usr/bin/jps', '/etc/ld.so.conf.d/jdk.conf' ]:
+      file { [ '/etc/ld.so.conf.d/jdk.conf' ]:
         ensure  => absent
       }
 
