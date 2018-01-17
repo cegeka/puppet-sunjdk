@@ -20,7 +20,7 @@ define sunjdk::instance(
   }
 
   case $::operatingsystem {
-    redhat, centos: {
+    'RedHat', 'CentOS': {
       sunjdk::redhat { $name:
         ensure      => $ensure,
         jdk_version => $real_jdk_version,
@@ -28,13 +28,13 @@ define sunjdk::instance(
         versionlock => $versionlock
       }
     }
-    ubuntu: {
+    'Ubuntu': {
       sunjdk::ubuntu { $name:
         pkg_name    => $real_pkg_name,
         jdk_version => $real_jdk_version
       }
     }
-    windows: {
+    'Windows': {
       sunjdk::windows { $name:
         ensure          => $ensure,
         pkg_name        => $real_pkg_name,
