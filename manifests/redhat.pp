@@ -37,7 +37,7 @@ define sunjdk::redhat(
         }
       }
 
-       case $versionlock {
+      case $versionlock {
         true: {
           yum::versionlock { "0:${pkg_name}-${jdk_version}.*" : }
         }
