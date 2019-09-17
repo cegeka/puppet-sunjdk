@@ -63,7 +63,7 @@ describe 'sunjdk::instance' do
             )
           }
 
-          it { should contain_packagelock("jdk1.8.0_31") }
+          it { should contain_yum__versionlock("0:jdk1.8.0_31-1.8.0_31-fcs.*") }
         end
       end
     end
